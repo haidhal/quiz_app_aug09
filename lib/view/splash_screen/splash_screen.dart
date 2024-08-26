@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quiz_app_aug09/utils/image_constants.dart';
+import 'package:quiz_app_aug09/view/category_screen/category_screen.dart';
 import 'package:quiz_app_aug09/view/quiz_screen/quiz_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context, 
        MaterialPageRoute(
-        builder: (context)=>QuizScreen()));
+        builder: (context)=>CategoryScreen()
+       // QuizScreen()
+        ));
     } 
     );
     super.initState();

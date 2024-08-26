@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quiz_app_aug09/dummy_db.dart';
+import 'package:quiz_app_aug09/view/option_card/option_card.dart';
+import 'package:quiz_app_aug09/view/result_screen/result_screen.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
-
+  const QuizScreen({super.key,this.categoryindex});
+final int? categoryindex;
   @override
   State<QuizScreen> createState() => _QuizScreenState();
 }
@@ -13,6 +17,8 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int questionindex = 0;
   int? selectedAnswerindex;
+  int rightAnswercount = 0;
+  int wrongAnswerscount = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +26,10 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         actions: [
-          Text("1/10")
+          Text("${questionindex+1} / ${DummyDb.questions.length}",
+          style: TextStyle(
+            color: Colors.white
+          ),)
         ],
       ),
       body: SafeArea(
@@ -30,42 +39,54 @@ class _QuizScreenState extends State<QuizScreen> {
             children: [
               Expanded(
                 child: 
-                _buildQuestionindex(),
+                _buildQuestionindex(widget.categoryindex!),
               ),
               SizedBox(height: 20,),  
               Column(children: List.generate(
                 4,
-                 (index)=>OptionCard(questionindex: questionindex,
-                 borderColor: _getcolor(index),
-                 optionindex : index,
-                 onOptionstap: () {
+                 (index)=>
+                
+                // 3
+              OptionCard(
+                onOptionstap: (){
                   if(selectedAnswerindex == null){
-                     selectedAnswerindex = index;
-                   print(index);
-                   setState(() {
-                     
-                   });
+                    setState(() {
+                      selectedAnswerindex = index;
+                    });
+                    if(selectedAnswerindex == DummyDb.CategoryQns[widget.categoryindex!][questionindex]["answer"]){
+                      rightAnswercount++;
+                    }
                   }
-                 
-                 },
-                 )
+                },
+                questionindex: questionindex, 
+                optionindex: index, 
+                  borderColor: _getcolor(index),
+                )
                  ),)
             ],  
           ),
         ),
       ),
+
+      // d
       bottomNavigationBar:
       selectedAnswerindex != null ?   // ternery condition or visibility can be used
        InkWell(
         onTap: () {
-          selectedAnswerindex = null;
+         // selectedAnswerindex = null;
           if(questionindex < DummyDb.questions.length -1){
           setState(() {
             questionindex++;
           });
+          selectedAnswerindex = null; //
           }else{
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("section one completed"),
-            backgroundColor: Colors.red,));
+            
+            Navigator.pushReplacement(context, 
+            MaterialPageRoute(builder: (context)=>ResultScreen(
+              rightAnswercount: rightAnswercount,
+              rightAnswer: rightAnswercount,
+              wrongAnswer: wrongAnswerscount,
+            )));
           }
         },
         child: Container(
@@ -87,21 +108,39 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  Container _buildQuestionindex() {
-    return Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 15,horizontal: 20),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade800,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: SingleChildScrollView(
-                  child: Text(DummyDb.questions[questionindex]["question"],
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(color: Colors.white),),
-                ),
-              );
+  Expanded _buildQuestionindex(int categoryindex) {
+    return Expanded(
+      child: Stack(
+        children: [
+          Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade800,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Column(  // column ?
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SingleChildScrollView(
+                            child: Text(DummyDb.CategoryQns[widget.categoryindex!][questionindex]["question"],
+                              //DummyDb.questions[questionindex]["question"],
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(color: Colors.white),),
+                          ),
+                        ],
+                      ),
+                    ),
+                     selectedAnswerindex == DummyDb.CategoryQns[widget.categoryindex!][questionindex]["answer"]
+              ? Lottie.asset("")
+              :SizedBox()
+        ],
+      ),
+    );
+             
+
+
   }
 
 Color _getcolor (int index){
@@ -109,14 +148,15 @@ Color _getcolor (int index){
   if(
  selectedAnswerindex != null
   ){
- if(index == DummyDb.questions[questionindex]["answer"]  ){
+ if(index == DummyDb.CategoryQns[widget.categoryindex!][questionindex]["answer"]  ){ //
     return Colors.green;   
   }
   // if (selectedAnswerindex == DummyDb.questions[questionindex]["answer"] && selectedAnswerindex == index){
   //     return Colors.green;
   // } 
-  else if(selectedAnswerindex != DummyDb.questions[questionindex]["answer"] && selectedAnswerindex == index){
-    if(selectedAnswerindex == DummyDb.questions[questionindex]["answer"] && selectedAnswerindex == index){
+  else if(selectedAnswerindex !=
+   DummyDb.CategoryQns[widget.categoryindex!][questionindex]["answer"] && selectedAnswerindex == index){
+    if(selectedAnswerindex == DummyDb.CategoryQns[widget.categoryindex!][questionindex]["answer"] && selectedAnswerindex == index){
         return Colors.green;
     }
     return Colors.red ;
@@ -130,56 +170,4 @@ Color _getcolor (int index){
 
 }
 
-
-class OptionCard extends StatelessWidget {
-  const OptionCard( {
-    super.key,
-    required this. questionindex,
-    required this. optionindex, 
-    this.onOptionstap,
-     required this.borderColor
-  });
-final int optionindex;
-  final int questionindex;
-  final void Function()? onOptionstap;
-  final Color borderColor;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: onOptionstap,
-        child: Container(
-        // margin: EdgeInsets.only(bottom: 15),    ==>outer
-         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-         decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(10),
-           border: Border.all(width: 2,
-
-          color: borderColor
-           )
-         ),
-         child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           
-           children: [
-           Text(DummyDb.questions[questionindex]["options"][optionindex],
-           style: TextStyle(
-             color: Colors.white,
-             fontWeight: FontWeight.bold
-           ),),
-           CircleAvatar(
-             radius: 10,
-             backgroundColor: Colors.white,
-             child: CircleAvatar(
-               radius: 9,
-               backgroundColor: Colors.black,
-             ),
-           )
-         ],),
-        ),
-      ),
-    );
-  }
-}
 
