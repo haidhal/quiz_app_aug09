@@ -59,9 +59,7 @@ class DummyDb {
   ];
   static List<List<Map>> CategoryQns = [
     [
-       {
-        "category" : "sports"
-      },
+      
       {
         "question" : "What is the length of a standard marathon race?",
         "options" : [ "21 kilometers", "42 kilometers", "10 kilometers","50 kilometers"],
@@ -120,9 +118,7 @@ class DummyDb {
 
     ],
     [
-      {
-        "category" : "chemistry"
-      },
+      
        {
     "question": "What is the chemical symbol for gold?",
     "options": ["Au", "Ag", "Pb", "Fe"],
@@ -175,9 +171,7 @@ class DummyDb {
   }
     ],
     [
-      {
-        "category" : "maths"
-      },
+     
   {
     "question": "What is the value of π (pi) to two decimal places?",
     "options": ["3.12", "3.14", "3.16", "3.18"],
