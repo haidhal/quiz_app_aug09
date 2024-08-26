@@ -98,7 +98,7 @@ class CategoryScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 22,),
                 Text("Let's play",
                 style: TextStyle(
                   fontSize: 20,
