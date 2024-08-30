@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:quiz_app_aug09/dummy_db.dart';
 
@@ -31,9 +29,9 @@ class OptionCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // dout
+              // 
               Text(
-                DummyDb.CategoryQns[categoryindex!][questionindex]["options"]
+                DummyDb.categoryQns[categoryindex!][questionindex]["options"]
                         [optionindex]
                     .toString(),
                 style: const TextStyle(

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:quiz_app_aug09/dummy_db.dart';
 import 'package:quiz_app_aug09/view/category_screen/category_screen.dart';
@@ -44,68 +42,59 @@ class _ResultScreenState extends State<ResultScreen> {
                     3,
                     (index) => Padding(
                           padding: EdgeInsets.only(
-                              bottom: index == 1 ? 20 : 0, left: 15, right: 15),
+                              bottom: index == 1 ? 50 : 0, left: 15, right: 15),
                           child: Icon(
                             Icons.star,
-                            color:
-                                index <= starcount ? Colors.amber : Colors.grey,
+                            color: index < calpercentage()
+                                ? Colors.amber
+                                : Colors.grey,
                             size: index == 1 ? 80 : 50,
                           ),
                         ))),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Text(
+            const Text(
               "congrats!",
               style: TextStyle(fontSize: 22, color: Colors.white),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
-              "${widget.rightAnswercount}/${DummyDb.CategoryQns[widget.categoryindex].length}",
-              style: TextStyle(fontSize: 38, color: Colors.yellow),
+              "${widget.rightAnswercount}/${DummyDb.categoryQns[widget.categoryindex].length}",
+              style: const TextStyle(fontSize: 38, color: Colors.yellow),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
               "Correct Answers : ${widget.rightAnswercount}",
-              style: TextStyle(fontSize: 15, color: Colors.white),
+              style: const TextStyle(fontSize: 15, color: Colors.white),
             ),
             Text(
-              "wrong Answers : ${DummyDb.CategoryQns[widget.categoryindex].length - widget.rightAnswercount}",
-              style: TextStyle(fontSize: 15, color: Colors.white),
+              "wrong Answers : ${DummyDb.categoryQns[widget.categoryindex].length - widget.rightAnswercount}",
+              style: const TextStyle(fontSize: 15, color: Colors.white),
             ),
-            Text(
-              "skipped Answers :0",
-              style: TextStyle(fontSize: 15, color: Colors.white),
-            ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => QuizScreen()));
+            InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CategoryScreen()));
                 },
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CategoryScreen()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: Colors.orange,
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Text(
-                      "Restart",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: Colors.orange,
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text(
+                    "Restart",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ))
           ],
@@ -115,10 +104,11 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   calpercentage() {
-    double percentage =
-        (widget.rightAnswercount / DummyDb.questions.length) * 100;
-    print(percentage);
-if (percentage >= 80) {
+    double percentage = (widget.rightAnswercount /
+            DummyDb.categoryQns[widget.categoryindex].length) *
+        100;
+
+    if (percentage >= 80) {
       return 3;
     } else if (percentage >= 50) {
       return 2;

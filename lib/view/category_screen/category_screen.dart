@@ -68,10 +68,11 @@ class CategoryScreen extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
+                 
                     Icon(
                       Icons.access_alarm_rounded,
                       size: 50,
-                    ), // lottie
+                    ), // image
                     SizedBox(
                       width: 15,
                     ),
@@ -105,13 +106,13 @@ class CategoryScreen extends StatelessWidget {
                     Icon(
                       Icons.circle,
                       size: 50,
-                    ), // lottie
+                    ), // image
                     SizedBox(
                       width: 15,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "points",
@@ -143,9 +144,10 @@ mainAxisAlignment: MainAxisAlignment.center,
               SizedBox(
                 height: 15,
               ),
+ // gridview builder             
               Expanded(
                 child: GridView.builder(
-                    itemCount: DummyDb.CategoryQns.length,
+                    itemCount: DummyDb.categoryQns.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 15,
                         crossAxisSpacing: 15,
@@ -192,11 +194,14 @@ mainAxisAlignment: MainAxisAlignment.center,
                                     ],
                                   ),
                                 ),
+                      // image          
                                 Positioned(
                                     top: 0,
                                     left: 30,
-child: CircleAvatar(
+                                    child: CircleAvatar(
                                       radius: 45,
+                                      backgroundImage:
+                                      NetworkImage(DummyDb.categories[index]["imageurl"])
                                     )),
                               ],
                             ),
@@ -210,5 +215,3 @@ child: CircleAvatar(
     );
   }
 }
-
-
