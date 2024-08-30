@@ -30,7 +30,7 @@ class _QuizScreenState extends State<QuizScreen> {
           if (count > 0) {
             count--;
           } else {
-            selectedAnswerindex = null;
+            selectedAnswerindex = null; 
             nextQuestion();
           }
         });
@@ -62,7 +62,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   @override
-  void initState() {
+  void initState() { // what to do initially when a page is open
     starttimer();
 
     super.initState();

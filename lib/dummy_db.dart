@@ -214,8 +214,8 @@ class DummyDb {
      "category": "SPORTS", "questionNo": "10 Questions"},
     {"imageurl": "https://i.pinimg.com/564x/72/09/95/7209959cce4a08ccb2a739da81f3ccf5.jpg",
      "category": "CHEMISTRY", "questionNo": "10 Questions"},
-    {"imageurl": "https://i.pinimg.com/564x/06/6d/01/066d01021f6941465b30837fd3a89e1e.jpg",
+    {"imageurl": "https://i.pinimg.com/564x/05/92/3a/05923ac17bcad1eece0613a2a7208016.jpg",
      "category": "MATHS", "questionNo": "10 Questions"},
-    {"imageurl": "", "category": "BIOLOGY", "questionNo": "10 Questions"},
+   
   ];
 }

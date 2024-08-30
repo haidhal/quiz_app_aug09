@@ -197,12 +197,16 @@ class CategoryScreen extends StatelessWidget {
                       // image          
                                 Positioned(
                                     top: 0,
-                                    left: 30,
-                                    child: CircleAvatar(
-                                      radius: 45,
-                                      backgroundImage:
-                                      NetworkImage(DummyDb.categories[index]["imageurl"])
-                                    )),
+                                    
+                                   // left: 30,
+                                    child: 
+                                    Image(height: 150,
+                                      image: NetworkImage(DummyDb.categories[index]["imageurl"],
+                                    ),
+                                     )
+                                   
+                                   
+                                    ),
                               ],
                             ),
                           ),
